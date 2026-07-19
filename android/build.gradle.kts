@@ -17,16 +17,23 @@ subprojects {
 }
 
 subprojects {
-    project.evaluationDependsOn(":app")
-}
-
-subprojects {
-    afterEvaluate {
+    val configureSubproject = {
         if (plugins.hasPlugin("com.android.application") || plugins.hasPlugin("com.android.library")) {
             val android = extensions.findByName("android") as? com.android.build.gradle.BaseExtension
             android?.compileSdkVersion(36)
         }
     }
+    if (state.executed) {
+        configureSubproject()
+    } else {
+        afterEvaluate {
+            configureSubproject()
+        }
+    }
+}
+
+subprojects {
+    project.evaluationDependsOn(":app")
 }
 
 tasks.register<Delete>("clean") {
