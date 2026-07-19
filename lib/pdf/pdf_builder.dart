@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -16,7 +17,8 @@ class PdfBuilder {
 
     // Load company logo if path exists
     pw.MemoryImage? logoImage;
-    if (invoice.businessInfo.logoPath != null &&
+    if (!kIsWeb &&
+        invoice.businessInfo.logoPath != null &&
         invoice.businessInfo.logoPath!.isNotEmpty &&
         File(invoice.businessInfo.logoPath!).existsSync()) {
       final logoBytes = await File(invoice.businessInfo.logoPath!).readAsBytes();

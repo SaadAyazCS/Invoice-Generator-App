@@ -33,13 +33,22 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
 
   Future<void> _loadInvoice() async {
     setState(() => _isLoading = true);
-    final settings = await _dbService.getAppSettings();
-    final inv = await _dbService.getInvoiceById(widget.invoiceId);
-    setState(() {
-      _currencySymbol = settings.currency;
-      _invoice = inv;
-      _isLoading = false;
-    });
+    try {
+      final settings = await _dbService.getAppSettings();
+      final inv = await _dbService.getInvoiceById(widget.invoiceId);
+      if (mounted) {
+        setState(() {
+          _currencySymbol = settings.currency;
+          _invoice = inv;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading invoice: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   Future<void> _sharePdf() async {

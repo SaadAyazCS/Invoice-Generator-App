@@ -28,12 +28,21 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
 
   Future<void> _loadCustomers() async {
     setState(() => _isLoading = true);
-    final list = await _dbService.getAllCustomers();
-    setState(() {
-      _customers = list;
-      _applySearch();
-      _isLoading = false;
-    });
+    try {
+      final list = await _dbService.getAllCustomers();
+      if (mounted) {
+        setState(() {
+          _customers = list;
+          _applySearch();
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading customers: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   void _applySearch() {

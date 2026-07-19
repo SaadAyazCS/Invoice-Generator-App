@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import '../models/app_settings.dart';
@@ -51,20 +52,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Future<void> _loadSettings() async {
     setState(() => _isLoading = true);
-    _profile = await _dbService.getCompanyProfile();
-    _settings = await _dbService.getAppSettings();
+    try {
+      _profile = await _dbService.getCompanyProfile();
+      _settings = await _dbService.getAppSettings();
 
-    _nameCtrl.text = _profile.name;
-    _addressCtrl.text = _profile.address;
-    _emailCtrl.text = _profile.email;
-    _phoneCtrl.text = _profile.phone;
-    _taxIdCtrl.text = _profile.taxId;
-    _paymentCtrl.text = _profile.paymentDetails ?? '';
+      _nameCtrl.text = _profile.name;
+      _addressCtrl.text = _profile.address;
+      _emailCtrl.text = _profile.email;
+      _phoneCtrl.text = _profile.phone;
+      _taxIdCtrl.text = _profile.taxId;
+      _paymentCtrl.text = _profile.paymentDetails ?? '';
 
-    _taxRateCtrl.text = _settings.defaultTaxRate.toStringAsFixed(1);
-    _prefixCtrl.text = _settings.invoicePrefix;
-
-    setState(() => _isLoading = false);
+      _taxRateCtrl.text = _settings.defaultTaxRate.toStringAsFixed(1);
+      _prefixCtrl.text = _settings.invoicePrefix;
+    } catch (e) {
+      debugPrint('Error loading settings: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   Future<void> _pickLogo() async {
@@ -140,7 +147,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             color: isDark ? AppTheme.darkSurface : Colors.grey[200],
                             shape: BoxShape.circle,
                             border: Border.all(color: AppTheme.primaryColor, width: 2),
-                            image: _profile.logoPath != null &&
+                            image: !kIsWeb &&
+                                    _profile.logoPath != null &&
                                     _profile.logoPath!.isNotEmpty &&
                                     File(_profile.logoPath!).existsSync()
                                 ? DecorationImage(
@@ -149,7 +157,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   )
                                 : null,
                           ),
-                          child: _profile.logoPath == null ||
+                          child: kIsWeb ||
+                                  _profile.logoPath == null ||
                                   !File(_profile.logoPath!).existsSync()
                               ? const Icon(Icons.business_rounded, size: 48, color: AppTheme.primaryColor)
                               : null,

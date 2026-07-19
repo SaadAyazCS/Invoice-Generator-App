@@ -38,14 +38,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadDashboardData() async {
     setState(() => _isLoading = true);
-    final settings = await _dbService.getAppSettings();
-    final list = await _dbService.getAllInvoices();
-
-    setState(() {
-      _currencySymbol = settings.currency;
-      _invoices = list;
-      _isLoading = false;
-    });
+    try {
+      final settings = await _dbService.getAppSettings();
+      final list = await _dbService.getAllInvoices();
+      if (mounted) {
+        setState(() {
+          _currencySymbol = settings.currency;
+          _invoices = list;
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading dashboard data: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   // Analytics helper calculations

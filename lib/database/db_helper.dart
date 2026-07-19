@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class DBHelper {
   static Database? _database;
@@ -15,19 +15,42 @@ class DBHelper {
   }
 
   static Future<Database> _initDatabase() async {
-    if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
+    if (kIsWeb) {
+      try {
+        databaseFactory = databaseFactoryFfiWeb;
+        return await openDatabase(
+          'invoice_generator.db',
+          version: 1,
+          onCreate: _onCreate,
+        );
+      } catch (e) {
+        // Fallback for web in case WASM worker is restricted
+        databaseFactory = databaseFactoryFfiWeb;
+        return await openDatabase(
+          inMemoryDatabasePath,
+          version: 1,
+          onCreate: _onCreate,
+        );
+      }
+    }
+
+    if (defaultTargetPlatform == TargetPlatform.windows ||
+        defaultTargetPlatform == TargetPlatform.linux ||
+        defaultTargetPlatform == TargetPlatform.macOS) {
       sqfliteFfiInit();
       databaseFactory = databaseFactoryFfi;
-    }
 
-    String path;
-    if (!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)) {
       final docsDir = await getApplicationDocumentsDirectory();
-      path = join(docsDir.path, 'invoice_master_pro.db');
-    } else {
-      path = join(await getDatabasesPath(), 'invoice_master_pro.db');
+      final path = join(docsDir.path, 'invoice_generator.db');
+      return await openDatabase(
+        path,
+        version: 1,
+        onCreate: _onCreate,
+      );
     }
 
+    // Android & iOS native sqflite
+    final path = join(await getDatabasesPath(), 'invoice_generator.db');
     return await openDatabase(
       path,
       version: 1,

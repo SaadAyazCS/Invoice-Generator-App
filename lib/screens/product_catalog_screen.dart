@@ -30,14 +30,23 @@ class _ProductCatalogScreenState extends State<ProductCatalogScreen> {
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    final settings = await _dbService.getAppSettings();
-    final list = await _dbService.getAllProducts();
-    setState(() {
-      _currencySymbol = settings.currency;
-      _products = list;
-      _applySearch();
-      _isLoading = false;
-    });
+    try {
+      final settings = await _dbService.getAppSettings();
+      final list = await _dbService.getAllProducts();
+      if (mounted) {
+        setState(() {
+          _currencySymbol = settings.currency;
+          _products = list;
+          _applySearch();
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading product catalog: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   void _applySearch() {

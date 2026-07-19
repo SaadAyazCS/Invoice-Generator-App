@@ -70,38 +70,44 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
 
   Future<void> _initFormData() async {
     setState(() => _isLoading = true);
-    _businessInfo = await _dbService.getCompanyProfile();
-    _settings = await _dbService.getAppSettings();
+    try {
+      _businessInfo = await _dbService.getCompanyProfile();
+      _settings = await _dbService.getAppSettings();
 
-    if (widget.invoiceToEdit != null) {
-      final inv = widget.invoiceToEdit!;
-      if (widget.isDuplicating) {
-        _invoiceNumber = await _dbService.generateNextInvoiceNumber();
-        _status = 'Unpaid';
+      if (widget.invoiceToEdit != null) {
+        final inv = widget.invoiceToEdit!;
+        if (widget.isDuplicating) {
+          _invoiceNumber = await _dbService.generateNextInvoiceNumber();
+          _status = 'Unpaid';
+        } else {
+          _invoiceNumber = inv.invoiceNumber;
+          _status = inv.status;
+        }
+
+        _invoiceDate = inv.invoiceDate;
+        _dueDate = inv.dueDate;
+        _businessInfo = inv.businessInfo;
+        _custNameCtrl.text = inv.customerInfo.name;
+        _custAddressCtrl.text = inv.customerInfo.address;
+        _custEmailCtrl.text = inv.customerInfo.email;
+        _custPhoneCtrl.text = inv.customerInfo.phone;
+        _notesCtrl.text = inv.notes;
+        _taxRateCtrl.text = inv.taxRate.toStringAsFixed(1);
+        _items = List.from(inv.items.map((i) => i.copyWith()));
       } else {
-        _invoiceNumber = inv.invoiceNumber;
-        _status = inv.status;
+        _invoiceNumber = await _dbService.generateNextInvoiceNumber();
+        _taxRateCtrl.text = _settings.defaultTaxRate.toStringAsFixed(1);
+        _items = [
+          InvoiceItem(name: 'Item / Service Description', quantity: 1, unitPrice: 100.0)
+        ];
       }
-
-      _invoiceDate = inv.invoiceDate;
-      _dueDate = inv.dueDate;
-      _businessInfo = inv.businessInfo;
-      _custNameCtrl.text = inv.customerInfo.name;
-      _custAddressCtrl.text = inv.customerInfo.address;
-      _custEmailCtrl.text = inv.customerInfo.email;
-      _custPhoneCtrl.text = inv.customerInfo.phone;
-      _notesCtrl.text = inv.notes;
-      _taxRateCtrl.text = inv.taxRate.toStringAsFixed(1);
-      _items = List.from(inv.items.map((i) => i.copyWith()));
-    } else {
-      _invoiceNumber = await _dbService.generateNextInvoiceNumber();
-      _taxRateCtrl.text = _settings.defaultTaxRate.toStringAsFixed(1);
-      _items = [
-        InvoiceItem(name: 'Item / Service Description', quantity: 1, unitPrice: 100.0)
-      ];
+    } catch (e) {
+      debugPrint('Error initializing form data: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
     }
-
-    setState(() => _isLoading = false);
   }
 
   double get _subtotal => _items.fold(0.0, (sum, i) => sum + i.itemTotal);

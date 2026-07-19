@@ -53,15 +53,23 @@ class _InvoiceListScreenState extends State<InvoiceListScreen> with SingleTicker
 
   Future<void> _loadData() async {
     setState(() => _isLoading = true);
-    final settings = await _dbService.getAppSettings();
-    final list = await _dbService.getAllInvoices();
-
-    setState(() {
-      _currencySymbol = settings.currency;
-      _allInvoices = list;
-      _applyFilters();
-      _isLoading = false;
-    });
+    try {
+      final settings = await _dbService.getAppSettings();
+      final list = await _dbService.getAllInvoices();
+      if (mounted) {
+        setState(() {
+          _currencySymbol = settings.currency;
+          _allInvoices = list;
+          _applyFilters();
+        });
+      }
+    } catch (e) {
+      debugPrint('Error loading invoice list: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   void _applyFilters() {
