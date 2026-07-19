@@ -121,13 +121,13 @@ class DBHelper {
     // Seed initial company profile & app settings
     await db.insert('company_profile', {
       'id': 1,
-      'name': 'Acme Solutions Ltd',
-      'address': '123 Business Way, Suite 400',
-      'email': 'billing@acmesolutions.com',
-      'phone': '+1 (555) 019-2834',
-      'taxId': 'TAX-998822',
+      'name': 'My Business',
+      'address': '123 Main Street, Suite 100',
+      'email': 'contact@business.com',
+      'phone': '+1 (555) 012-3456',
+      'taxId': 'TAX-12345',
       'logoPath': null,
-      'paymentDetails': 'Bank: Chase Bank | Account: 1234-5678-9012\nSWIFT: ACMEUS33 | UPI/PayPal: pay@acme.com',
+      'paymentDetails': 'Bank: Chase Bank | Account: 1234-5678-9012\nSWIFT: BUSI123 | UPI/PayPal: pay@business.com',
     });
 
     await db.insert('app_settings', {

@@ -85,7 +85,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: const Icon(Icons.receipt_long_rounded, color: AppTheme.primaryColor, size: 24),
             ),
             const SizedBox(width: 12),
-            const Text('Invoice Master Pro', style: TextStyle(fontWeight: FontWeight.bold)),
+            const Text('Invoice Generator', style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
         actions: [

@@ -8,13 +8,13 @@ class CompanyProfile {
   final String? paymentDetails;
 
   CompanyProfile({
-    this.name = 'Acme Solutions Ltd',
-    this.address = '123 Business Way, Suite 400',
-    this.email = 'billing@acmesolutions.com',
-    this.phone = '+1 (555) 019-2834',
-    this.taxId = 'TAX-998822',
+    this.name = 'My Business',
+    this.address = '123 Main Street, Suite 100',
+    this.email = 'contact@business.com',
+    this.phone = '+1 (555) 012-3456',
+    this.taxId = 'TAX-12345',
     this.logoPath,
-    this.paymentDetails = 'Bank Transfer: Account #1234-5678-9012\nSWIFT: ACMEUS33\nUPI / PayPal: pay@acme.com',
+    this.paymentDetails = 'Bank: Chase Bank | Account: 1234-5678-9012\nSWIFT: BUSI123 | UPI/PayPal: pay@business.com',
   });
 
   Map<String, dynamic> toMap() {
