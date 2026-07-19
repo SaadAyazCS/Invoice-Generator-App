@@ -19,18 +19,18 @@ class StatusBadge extends StatelessWidget {
 
     switch (status.toLowerCase()) {
       case 'paid':
-        bg = AppTheme.paidColor.withOpacity(0.15);
+        bg = AppTheme.paidColor.withAlpha(38);
         fg = AppTheme.paidColor;
         icon = Icons.check_circle_rounded;
         break;
       case 'overdue':
-        bg = AppTheme.overdueColor.withOpacity(0.15);
+        bg = AppTheme.overdueColor.withAlpha(38);
         fg = AppTheme.overdueColor;
         icon = Icons.warning_amber_rounded;
         break;
       case 'unpaid':
       default:
-        bg = AppTheme.unpaidColor.withOpacity(0.15);
+        bg = AppTheme.unpaidColor.withAlpha(38);
         fg = AppTheme.unpaidColor;
         icon = Icons.hourglass_top_rounded;
         break;
@@ -44,7 +44,7 @@ class StatusBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: fg.withOpacity(0.3), width: 1),
+        border: Border.all(color: fg.withAlpha(77), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

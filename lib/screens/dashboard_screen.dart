@@ -87,7 +87,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withOpacity(0.15),
+                color: AppTheme.primaryColor.withAlpha(38),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: const Icon(Icons.receipt_long_rounded, color: AppTheme.primaryColor, size: 24),
@@ -395,7 +395,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         decoration: BoxDecoration(
           color: isDark ? AppTheme.darkSurface : Colors.white,
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color.withAlpha(77)),
         ),
         child: Column(
           children: [

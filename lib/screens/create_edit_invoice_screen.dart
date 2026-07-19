@@ -248,9 +248,9 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                     Container(
                       padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
-                        color: AppTheme.primaryColor.withOpacity(0.1),
+                        color: AppTheme.primaryColor.withAlpha(26),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: AppTheme.primaryColor.withOpacity(0.3)),
+                        border: Border.all(color: AppTheme.primaryColor.withAlpha(77)),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -426,7 +426,7 @@ class _CreateEditInvoiceScreenState extends State<CreateEditInvoiceScreen> {
                           });
                         },
                       );
-                    }).toList(),
+                    }),
 
                     const SizedBox(height: 20),
 

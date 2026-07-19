@@ -233,7 +233,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: [
                       Expanded(
                         child: DropdownButtonFormField<String>(
-                          value: _settings.currency,
+                          initialValue: _settings.currency,
                           decoration: const InputDecoration(labelText: 'Default Currency'),
                           items: _currencies.map((c) {
                             return DropdownMenuItem(value: c, child: Text(c));
@@ -275,7 +275,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     title: const Text('Dark Mode Theme'),
                     subtitle: const Text('Toggle between sleek Dark and vibrant Light modes'),
                     value: _settings.isDarkMode,
-                    activeColor: AppTheme.primaryColor,
                     onChanged: (val) async {
                       setState(() {
                         _settings = _settings.copyWith(isDarkMode: val);
@@ -292,9 +291,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   const SizedBox(height: 12),
                   OutlinedButton.icon(
                     onPressed: () async {
+                      final messenger = ScaffoldMessenger.of(context);
                       final path = await BackupService.exportBackup();
                       if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
+                        messenger.showSnackBar(
                           SnackBar(
                             content: Text('Database backup exported to: $path'),
                             backgroundColor: AppTheme.primaryColor,

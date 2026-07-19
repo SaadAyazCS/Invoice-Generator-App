@@ -80,7 +80,7 @@ class RevenueChart extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: AppTheme.primaryColor.withOpacity(0.1),
+                  color: AppTheme.primaryColor.withAlpha(26),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: const Icon(Icons.bar_chart_rounded, color: AppTheme.primaryColor, size: 20),

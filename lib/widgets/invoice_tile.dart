@@ -40,7 +40,7 @@ class InvoiceTile extends StatelessWidget {
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: const Color(0x08000000),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -61,7 +61,7 @@ class InvoiceTile extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: AppTheme.primaryColor.withOpacity(0.1),
+                          color: AppTheme.primaryColor.withAlpha(26),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Icon(

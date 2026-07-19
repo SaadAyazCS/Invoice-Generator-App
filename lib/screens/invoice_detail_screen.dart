@@ -146,8 +146,8 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                   if (updated == true) _loadInvoice();
                   break;
                 case 'duplicate':
-                  final dup = await Navigator.push(
-                    context,
+                  final nav = Navigator.of(context);
+                  final dup = await nav.push(
                     MaterialPageRoute(
                       builder: (context) => CreateEditInvoiceScreen(
                         invoiceToEdit: inv,
@@ -155,7 +155,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                       ),
                     ),
                   );
-                  if (dup == true && mounted) Navigator.pop(context, true);
+                  if (dup == true && mounted) nav.pop(true);
                   break;
                 case 'delete':
                   _confirmDelete();
@@ -226,7 +226,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                 Expanded(
                   child: OutlinedButton.icon(
                     style: inv.effectiveStatus == 'Paid'
-                        ? OutlinedButton.styleFrom(backgroundColor: AppTheme.paidColor.withOpacity(0.1))
+                        ? OutlinedButton.styleFrom(backgroundColor: AppTheme.paidColor.withAlpha(26))
                         : null,
                     onPressed: () async {
                       await _dbService.updateInvoiceStatus(inv.id, 'Paid');
@@ -240,7 +240,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                 Expanded(
                   child: OutlinedButton.icon(
                     style: inv.effectiveStatus == 'Unpaid'
-                        ? OutlinedButton.styleFrom(backgroundColor: AppTheme.unpaidColor.withOpacity(0.1))
+                        ? OutlinedButton.styleFrom(backgroundColor: AppTheme.unpaidColor.withAlpha(26))
                         : null,
                     onPressed: () async {
                       await _dbService.updateInvoiceStatus(inv.id, 'Unpaid');
@@ -314,7 +314,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                   ],
                 ),
               );
-            }).toList(),
+            }),
 
             const SizedBox(height: 20),
 
@@ -322,9 +322,9 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: AppTheme.primaryColor.withOpacity(0.08),
+                color: AppTheme.primaryColor.withAlpha(20),
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppTheme.primaryColor.withOpacity(0.2)),
+                border: Border.all(color: AppTheme.primaryColor.withAlpha(51)),
               ),
               child: Column(
                 children: [

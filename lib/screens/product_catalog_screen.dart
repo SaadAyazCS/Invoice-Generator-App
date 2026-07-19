@@ -128,6 +128,7 @@ class _ProductCatalogScreenState extends State<ProductCatalogScreen> {
                   description: descController.text.trim(),
                 );
 
+                final nav = Navigator.of(context);
                 if (product == null) {
                   await _dbService.insertProduct(newProd);
                 } else {
@@ -135,7 +136,7 @@ class _ProductCatalogScreenState extends State<ProductCatalogScreen> {
                 }
 
                 if (mounted) {
-                  Navigator.pop(context);
+                  nav.pop();
                   _loadData();
                 }
               },
@@ -211,7 +212,7 @@ class _ProductCatalogScreenState extends State<ProductCatalogScreen> {
                                 leading: Container(
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: AppTheme.secondaryColor.withOpacity(0.15),
+                                    color: AppTheme.secondaryColor.withAlpha(38),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: const Icon(Icons.shopping_bag_outlined, color: AppTheme.secondaryColor),

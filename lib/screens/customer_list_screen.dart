@@ -126,6 +126,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                       isFavorite: isFavorite,
                     );
 
+                    final nav = Navigator.of(context);
                     if (customer == null) {
                       await _dbService.insertCustomer(newCust);
                     } else {
@@ -133,7 +134,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                     }
 
                     if (mounted) {
-                      Navigator.pop(context);
+                      nav.pop();
                       _loadCustomers();
                     }
                   },
@@ -209,7 +210,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                               ),
                               child: ListTile(
                                 leading: CircleAvatar(
-                                  backgroundColor: AppTheme.primaryColor.withOpacity(0.15),
+                                  backgroundColor: AppTheme.primaryColor.withAlpha(38),
                                   child: Text(
                                     customer.name.isNotEmpty ? customer.name[0].toUpperCase() : 'C',
                                     style: const TextStyle(
