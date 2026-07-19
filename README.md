@@ -1,67 +1,59 @@
-# 🧾 Invoice Master Pro - Flutter Invoice Generator App
+# Invoice Generator App
 
-[![Flutter](https://img.shields.io/badge/Flutter-3.29%2B-02569B?logo=flutter)](https://flutter.dev)
-[![Dart](https://img.shields.io/badge/Dart-3.7%2B-0175C2?logo=dart)](https://dart.dev)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-
-**Invoice Master Pro** is a modern, production-grade Flutter application designed for creating, managing, and exporting professional invoices. Built with **Material Design 3**, responsive layouts, local **SQLite** persistence, multi-template **PDF generation**, native sharing/printing, and analytics.
+A Flutter application developed for creating, managing, and exporting invoices. This project demonstrates core Flutter concepts including state management, navigation, form validation, local database persistence using SQLite, multi-template PDF generation, device sharing/printing, and custom dashboard analytics.
 
 ---
 
 ## 📱 Features
 
-### ⚡ Core Features
-- **Invoice Creation**: Fast, intuitive invoice creation workflow with complete form validation.
-- **Auto Invoice Numbering**: Configurable prefix (e.g. `INV-`, `BILL-`) with auto-incrementing serial numbers (`INV-001`, `INV-002`).
-- **Flexible Date Selection**: Select Invoice Date and Due Date using integrated calendar date pickers.
-- **Business Profile**: Configure Company Name, Address, Email, Phone, Tax ID, and Company Logo.
-- **Customer Information**: Save and select client details (Name, Address, Email, Phone) from built-in Customer History.
-- **Dynamic Items & Services**: Add multiple products/services with quantity, unit price, and optional percentage discount per item.
-- **Live Automatic Calculation**: Real-time computation of Subtotal, Discount Totals, Tax Amount, and Grand Total.
-- **Notes & Payment Instructions**: Add terms, notes, and bank / UPI / PayPal payment details.
-- **Local Persistence**: Full offline capability using SQLite database (`sqflite` & `sqflite_common_ffi`).
+### Core Features
+- **Create Invoice**: Form workflow with input validation for required fields.
+- **Auto Invoice Numbering**: Configurable prefix (e.g., `INV-`) with auto-incrementing serial numbers (e.g., `INV-001`).
+- **Date Pickers**: Select Invoice Date and Due Date.
+- **Business Information**: Company Name, Address, Email, Phone Number, and Logo.
+- **Customer Information**: Select from saved Customer History or enter Customer Name, Address, Email, and Phone Number.
+- **Multiple Line Items**: Product/Service Name, Quantity, Unit Price, and Discount (%).
+- **Automatic Calculations**: Real-time calculation of Subtotal, Discount, Tax Amount, and Grand Total.
+- **Notes & Payment Instructions**: Add payment terms and details.
+- **Local Database**: Offline persistence powered by SQLite (`sqflite`).
 
-### 📊 Invoice Management
-- **Interactive Dashboard**: Metrics cards for Total Invoices, Total Revenue, Paid, Unpaid, and Overdue amounts.
-- **Visual Analytics**: Interactive 6-month revenue chart displaying monthly income breakdown.
-- **Search & Filtering**: Real-time search by invoice number or customer name, with status tabs (`All`, `Paid`, `Unpaid`, `Overdue`).
+### Invoice Management
+- **Dashboard**: Overview cards for Total Invoices, Total Revenue, Paid, Unpaid, and Overdue amounts.
+- **Invoice List & Search**: Search invoices by invoice number or customer name, with filter tabs (`All`, `Paid`, `Unpaid`, `Overdue`).
 - **CRUD Operations**: View, Edit, Duplicate, and Delete invoices (with confirmation dialog).
-- **Status Lifecycle**: Toggle statuses between `Paid`, `Unpaid`, and `Overdue` (auto-detected when due date passes).
+- **Status Badges**: Mark invoices as `Paid`, `Unpaid`, or `Overdue`.
 
-### 📄 Export & Sharing
-- **PDF Generation Engine**: Instant high-resolution PDF generation with embedded company logo and payment QR code.
-- **Multiple PDF Templates**: Choose between **Classic Elegant**, **Modern Indigo**, and **Minimal Monochrome** templates.
-- **Download & View**: Offline PDF preview and download directly to the device.
-- **Native Sharing**: Share PDF files via WhatsApp, Email, Drive, etc. (`share_plus`).
-- **Direct Printing**: Native printer integration using `printing`.
+### Export & Sharing
+- **PDF Generation**: High-resolution PDF generation with embedded company logo and payment QR code.
+- **PDF Templates**: Choose between Classic, Modern, and Minimal template designs.
+- **Print & Share**: Print directly or share PDF files via WhatsApp, Email, etc.
 
-### 🌙 Bonus Features Included
-- 🌙 **Dark Mode Theme**: Persistent light and dark mode toggling.
-- 📷 **Company Logo Upload**: Select company logo from gallery and embed directly into invoice headers and PDFs.
-- 📱 **QR Code for Payment**: Generates dynamic QR code on screen and directly inside generated PDF for instant payment scanning.
-- 👥 **Customer Catalog**: Manage client directory with favorite tags and 1-click selection.
-- 📦 **Product Catalog**: Library of pre-saved products/services with default pricing for fast invoice assembly.
-- 📈 **Monthly Revenue Chart**: Visual trend charts on the Dashboard.
-- 💾 **Data Backup & Restore**: Export full database as a structured JSON backup file.
-- 📤 **CSV Export**: Export full invoice register to CSV format.
+### Bonus Features
+- 🌙 **Dark Mode**: Toggle between Light and Dark themes.
+- 📷 **Company Logo Upload**: Select logo from gallery to include on invoices and PDFs.
+- 📱 **Payment QR Code**: Dynamic QR code on screen and inside PDF.
+- 👥 **Customer Catalog**: Manage client history and favorite customers.
+- 📦 **Product Catalog**: Library of pre-saved products and services.
+- 📊 **Monthly Income Summary**: Visual revenue breakdown chart on the Dashboard.
+- 💾 **Backup & Restore**: Export complete data as a JSON file.
+- 📤 **CSV Export**: Export invoice list as CSV.
 
 ---
 
 ## 🛠️ Packages Used
 
-| Package | Version | Purpose |
-| :--- | :--- | :--- |
-| [`sqflite`](https://pub.dev/packages/sqflite) | `^2.4.1` | Local SQLite database for mobile |
-| [`sqflite_common_ffi`](https://pub.dev/packages/sqflite_common_ffi) | `^2.3.4` | SQLite FFI engine for desktop platforms |
-| [`pdf`](https://pub.dev/packages/pdf) | `^3.11.1` | High quality PDF document creation engine |
-| [`printing`](https://pub.dev/packages/printing) | `^5.13.4` | PDF preview, printing, and sharing integration |
-| [`share_plus`](https://pub.dev/packages/share_plus) | `^10.1.4` | Native device sharing (WhatsApp, Email, etc.) |
-| [`image_picker`](https://pub.dev/packages/image_picker) | `^1.1.2` | Gallery image picker for company logo upload |
-| [`intl`](https://pub.dev/packages/intl) | `^0.20.2` | Date and currency formatting |
-| [`uuid`](https://pub.dev/packages/uuid) | `^4.5.1` | Unique ID generation |
-| [`qr_flutter`](https://pub.dev/packages/qr_flutter) | `^4.1.0` | QR Code rendering for payment links |
-| [`csv`](https://pub.dev/packages/csv) | `^6.0.0` | Exporting invoice reports as CSV |
-| [`path_provider`](https://pub.dev/packages/path_provider) | `^2.1.5` | Accessing system documents/downloads directories |
+| Package | Purpose |
+| :--- | :--- |
+| `sqflite` / `sqflite_common_ffi` | Local SQLite database persistence |
+| `pdf` | PDF document generation |
+| `printing` | PDF preview, printing, and file sharing |
+| `share_plus` | Device sharing integration |
+| `image_picker` | Selecting company logo image |
+| `intl` | Date and currency formatting |
+| `uuid` | Unique ID generation |
+| `qr_flutter` | Payment QR code rendering |
+| `csv` | Exporting invoice reports as CSV |
+| `path_provider` | Directory path management |
 
 ---
 
@@ -69,10 +61,9 @@
 
 ### Prerequisites
 - [Flutter SDK](https://docs.flutter.dev/get-started/install) (`>=3.12.0`)
-- Android Studio / VS Code with Flutter extension
-- JDK 17 / Android SDK API 34+
+- Android Studio / VS Code with Flutter plugin
 
-### Installation & Execution
+### Running the App
 
 1. **Clone the Repository**:
    ```bash
@@ -85,31 +76,12 @@
    flutter pub get
    ```
 
-3. **Run the Application**:
-   - **Android**:
-     ```bash
-     flutter run
-     ```
-   - **Windows Desktop**:
-     ```bash
-     flutter run -d windows
-     ```
-   - **Web Browser**:
-     ```bash
-     flutter run -d chrome
-     ```
+3. **Run Application**:
+   ```bash
+   flutter run
+   ```
 
-4. **Build Release APK**:
+4. **Build APK**:
    ```bash
    flutter build apk --release
    ```
-
-> 📦 **APK Output Path**:
-> After building, the compiled release APK file is generated at:
-> `build/app/outputs/flutter-apk/app-release.apk`
-
----
-
-## 📄 License
-
-Distributed under the MIT License.
