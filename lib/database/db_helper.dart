@@ -9,32 +9,7 @@ class DBHelper {
 
   static Future<Database> get database async {
     if (_database != null) return _database!;
-    try {
-      _database = await _initDatabase();
-    } catch (e) {
-      debugPrint('Database initialization warning: $e');
-      if (kIsWeb) {
-        try {
-          sqfliteFfiInit();
-          databaseFactory = databaseFactoryFfi;
-          _database = await openDatabase(
-            inMemoryDatabasePath,
-            version: 1,
-            onCreate: _onCreate,
-          );
-        } catch (webErr) {
-          debugPrint('Web fallback database error: $webErr');
-          databaseFactory = databaseFactoryFfiWeb;
-          _database = await openDatabase(
-            inMemoryDatabasePath,
-            version: 1,
-            onCreate: _onCreate,
-          );
-        }
-      } else {
-        rethrow;
-      }
-    }
+    _database = await _initDatabase();
     return _database!;
   }
 
@@ -48,8 +23,8 @@ class DBHelper {
           onCreate: _onCreate,
         );
       } catch (e) {
-        sqfliteFfiInit();
-        databaseFactory = databaseFactoryFfi;
+        debugPrint('Web database error, falling back to web in-memory database: $e');
+        databaseFactory = databaseFactoryFfiWeb;
         return await openDatabase(
           inMemoryDatabasePath,
           version: 1,
