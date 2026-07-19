@@ -4,7 +4,7 @@
 [![Dart](https://img.shields.io/badge/Dart-3.7%2B-0175C2?logo=dart)](https://dart.dev)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-**Invoice Master Pro** is a feature-packed, production-grade Flutter application built to streamline invoice creation, management, export, and client cataloging. Built with modern **Material Design 3**, responsive layouts, local **SQLite** persistence, multi-template **PDF generation**, native sharing/printing, and analytics.
+**Invoice Master Pro** is a modern, production-grade Flutter application designed for creating, managing, and exporting professional invoices. Built with **Material Design 3**, responsive layouts, local **SQLite** persistence, multi-template **PDF generation**, native sharing/printing, and analytics.
 
 ---
 
@@ -65,14 +65,14 @@
 
 ---
 
-## 🚀 Setup & Installation Instructions
+## 🚀 Setup & Build Instructions
 
 ### Prerequisites
 - [Flutter SDK](https://docs.flutter.dev/get-started/install) (`>=3.12.0`)
 - Android Studio / VS Code with Flutter extension
 - JDK 17 / Android SDK API 34+
 
-### Step-by-Step Run & Build Commands
+### Installation & Execution
 
 1. **Clone the Repository**:
    ```bash
@@ -86,15 +86,15 @@
    ```
 
 3. **Run the Application**:
-   - For Android Emulator / Physical Device:
+   - **Android**:
      ```bash
      flutter run
      ```
-   - For Windows Desktop:
+   - **Windows Desktop**:
      ```bash
      flutter run -d windows
      ```
-   - For Web Browser:
+   - **Web Browser**:
      ```bash
      flutter run -d chrome
      ```
@@ -103,11 +103,13 @@
    ```bash
    flutter build apk --release
    ```
-   The generated APK will be located at:
-   `build/app/outputs/flutter-apk/app-release.apk`
+
+> 📦 **APK Output Path**:
+> After building, the compiled release APK file is generated at:
+> `build/app/outputs/flutter-apk/app-release.apk`
 
 ---
 
-## 🤝 License
+## 📄 License
 
 Distributed under the MIT License.
