@@ -108,24 +108,6 @@
 
 ---
 
-## 📸 Application Screenshots
-
-Below are representations of the application's key screens:
-
-| 1. Dashboard & Revenue Chart | 2. Invoice Management List |
-| :---: | :---: |
-| ![Dashboard](screenshots/dashboard.png) | ![Invoice List](screenshots/invoice_list.png) |
-
-| 3. Create / Edit Invoice | 4. PDF Preview & Template Picker |
-| :---: | :---: |
-| ![Create Invoice](screenshots/create_invoice.png) | ![PDF Preview](screenshots/pdf_preview.png) |
-
-| 5. Company & App Settings | 6. Customer Catalog |
-| :---: | :---: |
-| ![Settings](screenshots/settings.png) | ![Customer History](screenshots/customers.png) |
-
----
-
 ## 🤝 License
 
 Distributed under the MIT License.
