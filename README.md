@@ -76,8 +76,8 @@
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/invoice-generator-app.git
-   cd invoice-generator-app
+   git clone https://github.com/SaadAyazCS/Invoice-Generator-App.git
+   cd Invoice-Generator-App
    ```
 
 2. **Install Dependencies**:
