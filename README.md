@@ -6,29 +6,40 @@ A Flutter application developed for creating, managing, and exporting invoices. 
 
 ## 📸 App Screenshots
 
-| Dashboard | Invoice List | Customer Directory | Product Catalog |
-| :---: | :---: | :---: | :---: |
-| <img src="assets/images/1.jpeg" width="180"/> | <img src="assets/images/2.jpeg" width="180"/> | <img src="assets/images/3.jpeg" width="180"/> | <img src="assets/images/4.jpeg" width="180"/> |
-
-| Create Invoice | PDF Preview | Settings | Dark Theme |
-| :---: | :---: | :---: | :---: |
-| <img src="assets/images/5.jpeg" width="180"/> | <img src="assets/images/6.jpeg" width="180"/> | <img src="assets/images/7.jpeg" width="180"/> | <img src="assets/images/8.jpeg" width="180"/> |
-
-| Revenue Analytics | Customer Select | Product Select | Custom Template |
-| :---: | :---: | :---: | :---: |
-| <img src="assets/images/9.jpeg" width="180"/> | <img src="assets/images/10.jpeg" width="180"/> | <img src="assets/images/11.jpeg" width="180"/> | <img src="assets/images/12.jpeg" width="180"/> |
-
-| App Preview 13 | App Preview 14 | App Preview 15 | App Preview 16 |
-| :---: | :---: | :---: | :---: |
-| <img src="assets/images/13.jpeg" width="180"/> | <img src="assets/images/14.jpeg" width="180"/> | <img src="assets/images/15.jpeg" width="180"/> | <img src="assets/images/16.jpeg" width="180"/> |
-
-| App Preview 17 | App Preview 18 | App Preview 19 | App Preview 20 |
-| :---: | :---: | :---: | :---: |
-| <img src="assets/images/17.jpeg" width="180"/> | <img src="assets/images/18.jpeg" width="180"/> | <img src="assets/images/19.jpeg" width="180"/> | <img src="assets/images/20.jpeg" width="180"/> |
-
-| App Preview 21 | App Preview 22 |
-| :---: | :---: |
-| <img src="assets/images/21.jpeg" width="180"/> | <img src="assets/images/22.jpeg" width="180"/> |
+<p align="center">
+  <img src="assets/images/1.jpeg" width="180" />
+  <img src="assets/images/2.jpeg" width="180" />
+  <img src="assets/images/3.jpeg" width="180" />
+  <img src="assets/images/4.jpeg" width="180" />
+</p>
+<p align="center">
+  <img src="assets/images/5.jpeg" width="180" />
+  <img src="assets/images/6.jpeg" width="180" />
+  <img src="assets/images/7.jpeg" width="180" />
+  <img src="assets/images/8.jpeg" width="180" />
+</p>
+<p align="center">
+  <img src="assets/images/9.jpeg" width="180" />
+  <img src="assets/images/10.jpeg" width="180" />
+  <img src="assets/images/11.jpeg" width="180" />
+  <img src="assets/images/12.jpeg" width="180" />
+</p>
+<p align="center">
+  <img src="assets/images/13.jpeg" width="180" />
+  <img src="assets/images/14.jpeg" width="180" />
+  <img src="assets/images/15.jpeg" width="180" />
+  <img src="assets/images/16.jpeg" width="180" />
+</p>
+<p align="center">
+  <img src="assets/images/17.jpeg" width="180" />
+  <img src="assets/images/18.jpeg" width="180" />
+  <img src="assets/images/19.jpeg" width="180" />
+  <img src="assets/images/20.jpeg" width="180" />
+</p>
+<p align="center">
+  <img src="assets/images/21.jpeg" width="180" />
+  <img src="assets/images/22.jpeg" width="180" />
+</p>
 
 ---
 
