@@ -68,8 +68,9 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
       context: context,
       builder: (context) {
         return StatefulBuilder(
-          builder: (context, setModalState) {
+          builder: (context, setDialogState) {
             return AlertDialog(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
               title: Text(customer == null ? 'Add New Customer' : 'Edit Customer'),
               content: SingleChildScrollView(
                 child: Column(
@@ -77,7 +78,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                   children: [
                     TextField(
                       controller: nameController,
-                      decoration: const InputDecoration(labelText: 'Customer Name *'),
+                      decoration: const InputDecoration(labelText: 'Customer / Business Name *'),
                     ),
                     const SizedBox(height: 10),
                     TextField(
@@ -88,7 +89,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                     TextField(
                       controller: emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(labelText: 'Email Address'),
+                      decoration: const InputDecoration(labelText: 'Email'),
                     ),
                     const SizedBox(height: 10),
                     TextField(
@@ -102,7 +103,9 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                       value: isFavorite,
                       contentPadding: EdgeInsets.zero,
                       onChanged: (val) {
-                        setModalState(() => isFavorite = val ?? false);
+                        setDialogState(() {
+                          isFavorite = val ?? false;
+                        });
                       },
                     ),
                   ],
@@ -115,11 +118,12 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    if (nameController.text.trim().isEmpty) return;
+                    final name = nameController.text.trim();
+                    if (name.isEmpty) return;
 
                     final newCust = Customer(
                       id: customer?.id,
-                      name: nameController.text.trim(),
+                      name: name,
                       address: addressController.text.trim(),
                       email: emailController.text.trim(),
                       phone: phoneController.text.trim(),
@@ -155,13 +159,11 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.isSelectionMode ? 'Select Customer' : 'Customer History'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person_add_alt_1_rounded),
-            onPressed: () => _showAddEditCustomerDialog(),
-            tooltip: 'Add Customer',
-          ),
-        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => _showAddEditCustomerDialog(),
+        icon: const Icon(Icons.person_add_rounded),
+        label: const Text('Add Customer'),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -171,7 +173,7 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                   padding: const EdgeInsets.all(16.0),
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: 'Search customer by name, email, phone...',
+                      hintText: 'Search customer name, email or phone...',
                       prefixIcon: const Icon(Icons.search_rounded),
                       filled: true,
                       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -195,20 +197,28 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                           onButtonPressed: () => _showAddEditCustomerDialog(),
                         )
                       : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 90),
                           itemCount: _filteredCustomers.length,
                           itemBuilder: (context, index) {
                             final customer = _filteredCustomers[index];
                             return Container(
-                              margin: const EdgeInsets.only(bottom: 10),
+                              margin: const EdgeInsets.only(bottom: 12),
                               decoration: BoxDecoration(
                                 color: isDark ? AppTheme.darkSurface : Colors.white,
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(16),
                                 border: Border.all(
                                   color: isDark ? AppTheme.darkBorder : AppTheme.lightBorder,
                                 ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: const Color(0x08000000),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
                               ),
                               child: ListTile(
+                                contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                                 leading: CircleAvatar(
                                   backgroundColor: AppTheme.primaryColor.withAlpha(38),
                                   child: Text(
@@ -221,38 +231,85 @@ class _CustomerListScreenState extends State<CustomerListScreen> {
                                 ),
                                 title: Row(
                                   children: [
-                                    Text(
-                                      customer.name,
-                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    Expanded(
+                                      child: Text(
+                                        customer.name,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                          color: isDark ? Colors.white : AppTheme.lightTextPrimary,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
                                     if (customer.isFavorite) ...[
                                       const SizedBox(width: 6),
-                                      const Icon(Icons.star_rounded, color: Colors.amber, size: 16),
+                                      const Icon(Icons.star_rounded, color: Colors.amber, size: 18),
                                     ],
                                   ],
                                 ),
                                 subtitle: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    if (customer.email.isNotEmpty) Text(customer.email, style: const TextStyle(fontSize: 12)),
-                                    if (customer.phone.isNotEmpty) Text(customer.phone, style: const TextStyle(fontSize: 12)),
+                                    if (customer.email.isNotEmpty)
+                                      Text(
+                                        customer.email,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    if (customer.phone.isNotEmpty)
+                                      Text(
+                                        customer.phone,
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                   ],
                                 ),
                                 trailing: widget.isSelectionMode
-                                    ? const Icon(Icons.chevron_right_rounded, color: AppTheme.primaryColor)
-                                    : Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          IconButton(
-                                            icon: const Icon(Icons.edit_outlined, size: 20),
-                                            onPressed: () => _showAddEditCustomerDialog(customer),
+                                    ? const Icon(Icons.add_circle_outline, color: AppTheme.primaryColor, size: 24)
+                                    : PopupMenuButton<String>(
+                                        icon: Icon(
+                                          Icons.more_vert_rounded,
+                                          color: isDark ? AppTheme.darkTextSecondary : AppTheme.lightTextSecondary,
+                                        ),
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                        onSelected: (val) async {
+                                          if (val == 'edit') {
+                                            _showAddEditCustomerDialog(customer);
+                                          } else if (val == 'delete') {
+                                            await _dbService.deleteCustomer(customer.id);
+                                            _loadCustomers();
+                                          }
+                                        },
+                                        itemBuilder: (context) => [
+                                          const PopupMenuItem(
+                                            value: 'edit',
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.edit_outlined, size: 18),
+                                                SizedBox(width: 10),
+                                                Text('Edit'),
+                                              ],
+                                            ),
                                           ),
-                                          IconButton(
-                                            icon: const Icon(Icons.delete_outline_rounded, color: AppTheme.overdueColor, size: 20),
-                                            onPressed: () async {
-                                              await _dbService.deleteCustomer(customer.id);
-                                              _loadCustomers();
-                                            },
+                                          const PopupMenuItem(
+                                            value: 'delete',
+                                            child: Row(
+                                              children: [
+                                                Icon(Icons.delete_outline_rounded, color: AppTheme.overdueColor, size: 18),
+                                                SizedBox(width: 10),
+                                                Text('Delete', style: TextStyle(color: AppTheme.overdueColor)),
+                                              ],
+                                            ),
                                           ),
                                         ],
                                       ),

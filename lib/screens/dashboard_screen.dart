@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../models/invoice.dart';
+import '../pdf/pdf_builder.dart';
 import '../services/database_service.dart';
+import '../services/share_service.dart';
 import '../utils/app_theme.dart';
 import '../utils/formatters.dart';
 import '../widgets/empty_state_widget.dart';
@@ -85,15 +87,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: Row(
           children: [
             Container(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: AppTheme.primaryColor.withAlpha(38),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(8),
               ),
-              child: const Icon(Icons.receipt_long_rounded, color: AppTheme.primaryColor, size: 24),
+              child: const Icon(Icons.receipt_long_rounded, color: AppTheme.primaryColor, size: 20),
             ),
-            const SizedBox(width: 12),
-            const Text('Invoice Generator', style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(width: 8),
+            const Expanded(
+              child: Text(
+                'Invoice Generator',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ],
         ),
         actions: [
@@ -351,7 +359,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               await _dbService.deleteInvoice(invoice.id);
                               _loadDashboardData();
                             },
-                            onShare: () {},
+                            onShare: () async {
+                              final settings = await _dbService.getAppSettings();
+                              final pdfBytes = await PdfBuilder.buildPdf(
+                                invoice: invoice,
+                                currencySymbol: _currencySymbol,
+                                template: settings.pdfTemplate,
+                              );
+                              await ShareService.shareBytes(
+                                pdfBytes,
+                                'Invoice_${invoice.invoiceNumber}.pdf',
+                                text: 'Invoice #${invoice.invoiceNumber} for ${Formatters.currency(invoice.grandTotal, symbol: _currencySymbol)}',
+                              );
+                            },
                             onStatusChange: (newStatus) async {
                               await _dbService.updateInvoiceStatus(invoice.id, newStatus);
                               _loadDashboardData();
@@ -360,7 +380,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         },
                       ),
 
-                    const SizedBox(height: 40),
+                    const SizedBox(height: 90),
                   ],
                 ),
               ),

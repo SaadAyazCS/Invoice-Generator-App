@@ -210,7 +210,7 @@ class _InvoiceListScreenState extends State<InvoiceListScreen> with SingleTicker
                           },
                         )
                       : ListView.builder(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          padding: const EdgeInsets.fromLTRB(16, 0, 16, 90),
                           itemCount: _filteredInvoices.length,
                           itemBuilder: (context, index) {
                             final invoice = _filteredInvoices[index];
