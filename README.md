@@ -81,7 +81,10 @@ A Flutter application developed for creating, managing, and exporting invoices. 
    flutter run
    ```
 
-4. **Build APK**:
+4. **Build APK (< 25 MB)**:
    ```bash
-   flutter build apk --release
+   flutter build apk --release --split-per-abi
    ```
+   *Generated APKs will be located under `build/app/outputs/flutter-apk/`:*
+   - `app-arm64-v8a-release.apk` (~21.2 MB) - Recommended for modern Android phones
+   - `app-armeabi-v7a-release.apk` (~19.1 MB) - For older 32-bit Android phones
